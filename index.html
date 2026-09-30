@@ -1,0 +1,2821 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#e60006">
+  <title>Redzone Entertainment - Food Menu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cairo:wght@400;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+
+  <style>
+    :root {
+      --red-brand: #e60006;
+      --red-glow: #ff262c;
+      --red-dark: #940004;
+      --red-deep: #220306;
+      --gold-price: #ffde00;
+      --gold-glow: rgba(255, 222, 0, 0.45);
+      --bg-dark-1: #1a0205;
+      --bg-dark-2: #2b0409;
+      --bg-card: rgba(45, 6, 12, 0.9);
+      --bg-card-hover: rgba(72, 10, 19, 0.96);
+      --border-card: rgba(230, 0, 6, 0.45);
+      --border-card-hover: rgba(255, 55, 61, 0.85);
+      --text-main: #ffffff;
+      --text-muted: #f3c2c4;
+      --text-dim: #b37e81;
+      --font-display: 'Bebas Neue', 'Outfit', sans-serif;
+      --font-en: 'Outfit', sans-serif;
+      --font-ar: 'Cairo', sans-serif;
+      --radius-card: 16px;
+      --radius-pill: 9999px;
+      --transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background-color: var(--bg-dark-1);
+      background-image: 
+        radial-gradient(circle at 50% -5%, rgba(240, 0, 7, 0.65) 0%, rgba(160, 0, 5, 0.45) 40%, rgba(30, 3, 7, 0.98) 85%),
+        linear-gradient(180deg, #2e0409 0%, #150103 100%);
+      background-attachment: fixed;
+      color: var(--text-main);
+      font-family: var(--font-en);
+      min-height: 100vh;
+      line-height: 1.5;
+      overflow-x: hidden;
+      padding-bottom: max(110px, calc(90px + env(safe-area-inset-bottom)));
+    }
+
+    ::-webkit-scrollbar {
+      width: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #180205;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--red-brand);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--red-glow);
+    }
+
+    html[lang="en"] .item-title-ar,
+    html[lang="en"] .redzone-pill-ar,
+    html[lang="en"] .notice-lang-ar,
+    html[lang="en"] .showcase-caption-ar {
+      display: none !important;
+    }
+    html[lang="ar"] .item-title-en,
+    html[lang="ar"] .redzone-pill-en,
+    html[lang="ar"] .notice-lang-en,
+    html[lang="ar"] .showcase-caption-en {
+      display: none !important;
+    }
+
+    html[lang="ar"],
+    html[lang="ar"] body,
+    html[lang="ar"] input,
+    html[lang="ar"] button,
+    [dir="rtl"],
+    [dir="rtl"] * {
+      font-family: 'Cairo', sans-serif !important;
+    }
+
+    html[lang="ar"] .item-title-ar {
+      display: block !important;
+      font-size: 1.12rem !important;
+      font-weight: 700 !important;
+      color: #ffffff !important;
+      line-height: 1.35 !important;
+      letter-spacing: 0 !important;
+    }
+    html[lang="ar"] .price-unit {
+      font-size: 0 !important;
+    }
+    html[lang="ar"] .price-unit::after {
+      content: "ج.م";
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    [dir="rtl"] .search-icon {
+      left: auto;
+      right: 18px;
+    }
+    [dir="rtl"] .search-clear-btn {
+      right: auto;
+      left: 14px;
+    }
+    [dir="rtl"] .search-input {
+      text-align: right;
+    }
+    [dir="rtl"] .top-action-bar {
+      flex-direction: row-reverse;
+    }
+    [dir="rtl"] .menu-item-row {
+      flex-direction: row-reverse;
+    }
+    [dir="rtl"] .item-right-wrap {
+      flex-direction: row-reverse;
+    }
+    [dir="rtl"] .section-notice-card {
+      border-left: none;
+      border-right: 4px solid var(--gold-price);
+      text-align: right;
+    }
+    [dir="rtl"] .drawer-total-row {
+      flex-direction: row-reverse;
+    }
+    [dir="rtl"] .cart-summary-left {
+      flex-direction: row-reverse;
+    }
+    [dir="rtl"] .cart-item-row {
+      flex-direction: row-reverse;
+    }
+    [dir="rtl"] .cart-item-actions {
+      flex-direction: row-reverse;
+    }
+
+    .brand-hero {
+      position: relative;
+      padding: 3rem 1.25rem 2rem;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-glow-back {
+      position: absolute;
+      top: -130px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 580px;
+      height: 580px;
+      background: radial-gradient(circle, rgba(255, 30, 36, 0.6) 0%, rgba(220, 0, 5, 0.25) 50%, rgba(26, 2, 5, 0) 75%);
+      filter: blur(55px);
+      z-index: 0;
+      pointer-events: none;
+      animation: pulseSphere 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseSphere {
+      0% { transform: translateX(-50%) scale(0.92); opacity: 0.75; }
+      100% { transform: translateX(-50%) scale(1.15); opacity: 1; }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .brand-logo-img {
+      max-width: 220px;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto 0.75rem;
+      filter: drop-shadow(0 0 25px rgba(255, 40, 46, 0.6));
+      transition: var(--transition);
+    }
+
+    .brand-logo-img:hover {
+      transform: scale(1.04);
+      filter: drop-shadow(0 0 35px rgba(255, 40, 46, 0.85));
+    }
+
+    .menu-main-title {
+      font-family: var(--font-display);
+      font-size: clamp(3.2rem, 9vw, 5.8rem);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #ffffff;
+      line-height: 0.95;
+      text-shadow: 
+        0 0 25px rgba(230, 0, 6, 0.9),
+        0 0 50px rgba(230, 0, 6, 0.5),
+        0 4px 15px rgba(0,0,0,0.9);
+      margin-bottom: 0.75rem;
+    }
+
+    .hero-badges-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(34, 197, 94, 0.18);
+      border: 1px solid rgba(34, 197, 94, 0.5);
+      color: #4ade80;
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #22c55e;
+      animation: blinkDot 1.5s infinite;
+    }
+
+    @keyframes blinkDot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero-banner-fries {
+      background: linear-gradient(135deg, rgba(230, 0, 6, 0.45) 0%, rgba(130, 0, 5, 0.7) 100%);
+      border: 1.5px solid rgba(255, 222, 0, 0.75);
+      box-shadow: 0 4px 25px rgba(230, 0, 6, 0.45);
+      backdrop-filter: blur(10px);
+      padding: 0.8rem 1.4rem;
+      border-radius: var(--radius-pill);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #fff;
+      animation: bannerGlow 3s infinite alternate;
+    }
+
+    @keyframes bannerGlow {
+      0% { border-color: rgba(255, 40, 46, 0.6); box-shadow: 0 4px 15px rgba(230, 0, 6, 0.35); }
+      100% { border-color: rgba(255, 222, 0, 0.9); box-shadow: 0 4px 30px rgba(255, 222, 0, 0.45); }
+    }
+
+    .top-action-bar {
+      position: absolute;
+      top: 1.25rem;
+      left: 1.25rem;
+      right: 1.25rem;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .lang-pill-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #fff;
+      padding: 7px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(8px);
+      transition: var(--transition);
+    }
+
+    .lang-pill-btn:hover {
+      background: var(--red-brand);
+      border-color: var(--red-glow);
+      box-shadow: 0 0 15px rgba(230, 0, 6, 0.6);
+    }
+
+    .sticky-nav-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 2, 5, 0.95);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1.5px solid rgba(230, 0, 6, 0.4);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.85);
+      padding: 0.65rem 0;
+      transition: var(--transition);
+    }
+
+    .nav-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .search-bar-wrap {
+      position: relative;
+      margin-bottom: 0.65rem;
+    }
+
+    .search-input {
+      width: 100%;
+      background: rgba(42, 5, 11, 0.9);
+      border: 1.5px solid rgba(230, 0, 6, 0.5);
+      border-radius: var(--radius-pill);
+      padding: 10px 44px;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-input:focus {
+      border-color: var(--red-glow);
+      background: rgba(58, 8, 16, 0.98);
+      box-shadow: 0 0 20px rgba(255, 38, 44, 0.5);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--red-glow);
+      font-size: 1.05rem;
+      pointer-events: none;
+    }
+
+    .search-clear-btn {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-dim);
+      cursor: pointer;
+      display: none;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .search-clear-btn:hover {
+      color: #fff;
+    }
+
+    .category-pills {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 2px 4px 6px;
+      scrollbar-width: none;
+      white-space: nowrap;
+    }
+    .category-pills::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-btn {
+      flex-shrink: 0;
+      background: rgba(45, 6, 12, 0.85);
+      border: 1px solid rgba(230, 0, 6, 0.35);
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+
+    .cat-btn i {
+      color: var(--red-glow);
+      transition: var(--transition);
+    }
+
+    .cat-btn:hover {
+      background: rgba(85, 12, 22, 0.95);
+      color: #fff;
+      border-color: var(--red-glow);
+      transform: translateY(-1px);
+    }
+
+    .cat-btn.active {
+      background: linear-gradient(135deg, var(--red-brand) 0%, #aa0004 100%);
+      color: #ffffff;
+      border-color: #ff3e44;
+      box-shadow: 0 4px 18px rgba(230, 0, 6, 0.6);
+    }
+
+    .cat-btn.active i {
+      color: var(--gold-price);
+    }
+
+    .redzone-badge-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin: 3.5rem 0 2rem;
+      position: relative;
+    }
+
+    .redzone-badge-header::before,
+    .redzone-badge-header::after {
+      content: '';
+      flex: 1;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, rgba(230, 0, 6, 0.7) 40%, #ffffff 100%);
+      border-radius: 4px;
+    }
+
+    .redzone-badge-header::after {
+      background: linear-gradient(270deg, transparent, rgba(230, 0, 6, 0.7) 40%, #ffffff 100%);
+    }
+
+    .redzone-pill {
+      background: #ffffff;
+      color: var(--red-brand);
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 2.6rem);
+      letter-spacing: 3px;
+      padding: 7px 38px;
+      border-radius: var(--radius-pill);
+      box-shadow: 
+        0 0 25px rgba(230, 0, 6, 0.55),
+        0 5px 18px rgba(0, 0, 0, 0.7);
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 10px;
+      user-select: none;
+      transition: var(--transition);
+    }
+
+    .redzone-pill:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 35px rgba(255, 38, 44, 0.8);
+    }
+
+    .redzone-pill-ar {
+      font-family: 'Cairo', sans-serif !important;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--red-brand);
+      letter-spacing: 0;
+    }
+
+    .section-notice-card {
+      background: linear-gradient(135deg, rgba(230, 0, 6, 0.3) 0%, rgba(65, 8, 15, 0.7) 100%);
+      border-left: 4px solid var(--gold-price);
+      border-radius: 12px;
+      padding: 11px 18px;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.5);
+    }
+
+    .section-notice-card i {
+      color: var(--gold-price);
+      font-size: 1.3rem;
+    }
+
+    .menu-main-container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .section-layout-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (min-width: 992px) {
+      .section-layout-grid.with-showcase {
+        grid-template-columns: 1.4fr 1fr;
+      }
+      .section-layout-grid.with-showcase.reverse-side {
+        grid-template-columns: 1fr 1.4fr;
+      }
+    }
+
+    .signature-showcase-box {
+      background: linear-gradient(170deg, rgba(50, 7, 14, 0.95) 0%, rgba(24, 3, 6, 0.98) 100%);
+      border: 2px solid rgba(230, 0, 6, 0.55);
+      border-radius: 20px;
+      padding: 1.2rem;
+      box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.8),
+        0 0 30px rgba(230, 0, 6, 0.3);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: sticky;
+      top: 100px;
+    }
+
+    .showcase-imgs-wrap {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    @media (min-width: 500px) and (max-width: 991px) {
+      .showcase-imgs-wrap {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .showcase-card {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 22px rgba(0,0,0,0.7);
+      aspect-ratio: 16/10;
+      background: #200306;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .showcase-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      border-color: var(--red-glow);
+      box-shadow: 0 12px 30px rgba(230, 0, 6, 0.5);
+    }
+
+    .showcase-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .showcase-card:hover img {
+      transform: scale(1.08);
+    }
+
+    .showcase-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(180deg, transparent 0%, rgba(10, 1, 2, 0.9) 100%);
+      padding: 16px 14px 8px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      color: #fff;
+    }
+
+    .menu-items-table-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media (min-width: 768px) {
+      .menu-items-table-grid.two-cols {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 16px;
+      }
+      .menu-items-table-grid.four-cols {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 16px;
+      }
+    }
+
+    @media (min-width: 1100px) {
+      .menu-items-table-grid.four-cols {
+        grid-template-columns: repeat(4, 1fr);
+        column-gap: 16px;
+      }
+    }
+
+    .menu-item-row {
+      background: linear-gradient(165deg, rgba(46, 6, 12, 0.9) 0%, rgba(22, 3, 6, 0.96) 100%);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-card);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .menu-item-row:hover {
+      background: linear-gradient(165deg, rgba(68, 10, 18, 0.98) 0%, rgba(32, 4, 8, 1) 100%);
+      border-color: var(--border-card-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(230, 0, 6, 0.3);
+    }
+
+    .menu-item-row.item-hidden {
+      display: none !important;
+    }
+
+    .item-name-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .item-title-en {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .item-title-ar {
+      font-family: 'Cairo', sans-serif !important;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .item-right-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .price-box {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .price-num {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      color: var(--gold-price);
+      font-weight: 900;
+      letter-spacing: 0.5px;
+      line-height: 1;
+      text-shadow: 0 0 12px var(--gold-glow);
+    }
+
+    .price-unit {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .add-cart-btn {
+      background: linear-gradient(135deg, var(--red-brand) 0%, #b30005 100%);
+      border: 1px solid rgba(255, 65, 71, 0.6);
+      color: #ffffff;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.95rem;
+      box-shadow: 0 3px 12px rgba(230, 0, 6, 0.45);
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+
+    .add-cart-btn:hover {
+      background: var(--red-glow);
+      transform: scale(1.1) rotate(90deg);
+      box-shadow: 0 0 20px rgba(255, 38, 44, 0.75);
+    }
+
+    .add-cart-btn:active {
+      transform: scale(0.92);
+    }
+
+    .panoramic-gallery-section {
+      margin-top: 4.5rem;
+      padding: 1.5rem 0 1rem;
+      border-top: 1.5px solid rgba(230, 0, 6, 0.4);
+    }
+
+    .panoramic-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    @media (min-width: 600px) {
+      .panoramic-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (min-width: 992px) {
+      .panoramic-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 14px;
+      }
+    }
+
+    .pano-item {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1.5px solid rgba(230, 0, 6, 0.4);
+      aspect-ratio: 1;
+      background: #240307;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7);
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .pano-item:hover {
+      transform: translateY(-6px) scale(1.04);
+      border-color: var(--gold-price);
+      box-shadow: 0 12px 30px rgba(255, 222, 0, 0.4);
+    }
+
+    .pano-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .pano-item:hover img {
+      transform: scale(1.12);
+    }
+
+    .floating-cart-bar {
+      position: fixed;
+      bottom: max(20px, env(safe-area-inset-bottom));
+      left: 50%;
+      transform: translateX(-50%) translateY(140px);
+      width: calc(100% - 32px);
+      max-width: 520px;
+      background: linear-gradient(135deg, rgba(230, 0, 6, 0.96) 0%, rgba(140, 0, 4, 0.96) 100%);
+      border: 1.5px solid rgba(255, 222, 0, 0.7);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), 0 0 30px rgba(230, 0, 6, 0.65);
+      backdrop-filter: blur(18px);
+      border-radius: var(--radius-pill);
+      padding: 10px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1000;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.3s ease;
+    }
+
+    .floating-cart-bar.visible {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .floating-cart-bar:hover {
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.95), 0 0 40px rgba(255, 222, 0, 0.5);
+    }
+
+    .cart-summary-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .cart-icon-bubble {
+      background: #fff;
+      color: var(--red-brand);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      position: relative;
+    }
+
+    .cart-count-badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: var(--gold-price);
+      color: #000;
+      font-size: 0.75rem;
+      font-weight: 900;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+    }
+
+    .cart-details-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .cart-order-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    .cart-subtotal-val {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--gold-price);
+      letter-spacing: 0.5px;
+    }
+
+    .cart-view-btn {
+      background: #ffffff;
+      color: var(--red-brand);
+      font-weight: 800;
+      font-size: 0.92rem;
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--transition);
+    }
+
+    .floating-cart-bar:hover .cart-view-btn {
+      background: var(--gold-price);
+      color: #000;
+    }
+
+    .cart-modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 2000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    .cart-modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .cart-drawer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      max-width: 600px;
+      margin: 0 auto;
+      background: #200306;
+      border-top: 2.5px solid var(--red-glow);
+      border-radius: 26px 26px 0 0;
+      box-shadow: 0 -10px 45px rgba(0, 0, 0, 0.95);
+      padding: 1.5rem;
+      z-index: 2001;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .cart-modal-backdrop.open .cart-drawer {
+      transform: translateY(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      margin-bottom: 1rem;
+    }
+
+    .drawer-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .drawer-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .clear-cart-text-btn {
+      background: none;
+      border: 1px solid rgba(255, 77, 82, 0.4);
+      color: #ff6b70;
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: var(--transition);
+    }
+
+    .clear-cart-text-btn:hover {
+      background: rgba(230, 0, 6, 0.25);
+      color: #fff;
+      border-color: var(--red-glow);
+    }
+
+    .drawer-close-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: var(--transition);
+    }
+
+    .drawer-close-btn:hover {
+      background: var(--red-brand);
+    }
+
+    .drawer-items-scroll {
+      overflow-y: auto;
+      flex-grow: 1;
+      padding-right: 4px;
+      margin-bottom: 1rem;
+      max-height: 350px;
+    }
+
+    .cart-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(45, 6, 12, 0.75);
+      border: 1px solid rgba(230, 0, 6, 0.3);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+
+    .cart-item-name {
+      font-weight: 800;
+      font-size: 1rem;
+      color: #fff;
+    }
+
+    .cart-item-single-price {
+      font-size: 0.85rem;
+      color: var(--gold-price);
+      font-weight: 700;
+    }
+
+    .cart-item-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .cart-item-stepper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stepper-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      transition: var(--transition);
+    }
+
+    .stepper-btn:hover {
+      background: var(--red-brand);
+    }
+
+    .stepper-count {
+      font-weight: 900;
+      font-size: 1rem;
+      min-width: 20px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .cart-item-del-btn {
+      background: rgba(230, 0, 6, 0.2);
+      border: 1px solid rgba(230, 0, 6, 0.45);
+      color: #ff6065;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.88rem;
+      transition: var(--transition);
+    }
+
+    .cart-item-del-btn:hover {
+      background: var(--red-brand);
+      color: #fff;
+      border-color: var(--red-glow);
+      transform: scale(1.08);
+    }
+
+    .drawer-footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 1rem;
+    }
+
+    .drawer-total-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .drawer-total-label {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .drawer-total-price {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      color: var(--gold-price);
+      text-shadow: 0 0 15px var(--gold-glow);
+    }
+
+    .whatsapp-order-btn {
+      width: 100%;
+      background: #25d366;
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-pill);
+      padding: 14px 20px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+      transition: var(--transition);
+    }
+
+    .whatsapp-order-btn:hover {
+      background: #20ba5a;
+      box-shadow: 0 6px 25px rgba(37, 211, 102, 0.7);
+      transform: translateY(-2px);
+    }
+
+    .toast-msg {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: #1a0205;
+      border: 1.5px solid var(--red-glow);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9), 0 0 20px rgba(230, 0, 6, 0.5);
+      z-index: 3000;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      pointer-events: none;
+    }
+
+    .toast-msg.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    .back-to-top {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: rgba(230, 0, 6, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+      z-index: 99;
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition);
+    }
+
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .back-to-top:hover {
+      background: var(--red-glow);
+      transform: translateY(-3px);
+    }
+
+    .menu-footer {
+      text-align: center;
+      padding: 3rem 1rem 1rem;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 4rem;
+    }
+
+    .footer-logo {
+      max-width: 140px;
+      margin: 0 auto 1rem;
+      display: block;
+      opacity: 0.85;
+      filter: drop-shadow(0 0 10px rgba(230, 0, 6, 0.4));
+    }
+
+    .footer-social-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+      margin: 1.2rem 0 1.5rem;
+    }
+
+    .social-link {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(45, 6, 12, 0.85);
+      border: 1.5px solid rgba(230, 0, 6, 0.45);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .social-link:hover {
+      transform: translateY(-4px) scale(1.1);
+      color: #ffffff;
+    }
+
+    .social-link.facebook:hover {
+      background: #1877f2;
+      border-color: #1877f2;
+      box-shadow: 0 6px 20px rgba(24, 119, 242, 0.6);
+    }
+
+    .social-link.instagram:hover {
+      background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+      border-color: #d6249f;
+      box-shadow: 0 6px 20px rgba(214, 36, 159, 0.6);
+    }
+
+    .social-link.youtube:hover {
+      background: #ff0000;
+      border-color: #ff0000;
+      box-shadow: 0 6px 20px rgba(255, 0, 0, 0.6);
+    }
+
+    .no-results-box {
+      text-align: center;
+      padding: 4rem 1rem;
+      display: none;
+    }
+
+    .no-results-box i {
+      font-size: 3rem;
+      color: var(--red-glow);
+      margin-bottom: 1rem;
+    }
+
+    .no-results-box h3 {
+      font-size: 1.4rem;
+      color: #fff;
+      margin-bottom: 0.5rem;
+    }
+
+    .no-results-box p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 600px) {
+      .brand-hero {
+        padding: 2.2rem 1rem 1.5rem;
+      }
+      .menu-main-title {
+        font-size: clamp(2.6rem, 11vw, 3.4rem);
+        letter-spacing: 2px;
+      }
+      .redzone-pill {
+        font-size: 1.8rem;
+        padding: 6px 26px;
+      }
+      .redzone-badge-header {
+        margin: 2.8rem 0 1.5rem;
+        gap: 12px;
+      }
+      .section-notice-card {
+        font-size: 0.9rem;
+        padding: 9px 14px;
+        margin-bottom: 1.5rem;
+      }
+      .cat-btn {
+        padding: 7px 14px;
+        font-size: 0.85rem;
+        gap: 6px;
+      }
+      .search-input {
+        padding: 9px 38px;
+        font-size: 0.9rem;
+      }
+      .menu-item-row {
+        padding: 10px 14px;
+      }
+      .price-num {
+        font-size: 1.65rem;
+      }
+      .item-title-en, .item-title-ar {
+        font-size: 1rem;
+      }
+      .floating-cart-bar {
+        width: calc(100% - 24px);
+        padding: 8px 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="top-action-bar">
+    <button class="lang-pill-btn" id="langToggleBtn" onclick="toggleLanguage()">
+      <i class="fa-solid fa-globe"></i>
+      <span id="langBtnText">العربية</span>
+    </button>
+  </div>
+
+  <header class="brand-hero">
+    <div class="hero-glow-back"></div>
+    <div class="hero-content">
+      <img src="logo_transparent.png" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=200&auto=format&fit=crop&q=80'" alt="Redzone Logo" class="brand-logo-img" data-aos="zoom-in" data-aos-duration="700">
+      
+      <h1 class="menu-main-title t-menu-title" data-aos="fade-up" data-aos-delay="100">Food Menu</h1>
+
+      <div class="hero-badges-row" data-aos="fade-up" data-aos-delay="200">
+        <span class="status-badge">
+          <span class="status-dot"></span>
+          <span class="t-open">Open for Orders</span>
+        </span>
+        <span style="color: var(--text-muted); font-weight: 600;" class="t-subtag">Redzone Entertainment Culinary Experience</span>
+      </div>
+
+      <div class="hero-banner-fries" data-aos="fade-up" data-aos-delay="300">
+        <i class="fa-solid fa-french-fries" style="color: var(--gold-price);"></i>
+        <span class="t-hero-fries">All Sandwiches served with crispy fries 🍟</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="sticky-nav-wrapper">
+    <div class="nav-container">
+      <div class="search-bar-wrap">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="menuSearchInput" class="search-input" placeholder="Search menu (e.g., Negresco, Burger, Super Supreme, Coffee...)" onkeyup="filterMenuSearch()">
+        <button id="clearSearchBtn" class="search-clear-btn" onclick="clearMenuSearch()">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="category-pills">
+        <button class="cat-btn active" onclick="filterCategory('all', this)">
+          <i class="fa-solid fa-border-all"></i>
+          <span class="t-cat-all">All</span>
+        </button>
+        <button class="cat-btn" onclick="filterCategory('sandwiches', this)">
+          <i class="fa-solid fa-burger"></i>
+          <span class="t-cat-sandwiches">Sandwiches</span>
+        </button>
+        <button class="cat-btn" onclick="filterCategory('pasta', this)">
+          <i class="fa-solid fa-bowl-food"></i>
+          <span class="t-cat-pasta">Pasta</span>
+        </button>
+        <button class="cat-btn" onclick="filterCategory('pizza', this)">
+          <i class="fa-solid fa-pizza-slice"></i>
+          <span class="t-cat-pizza">Pizza</span>
+        </button>
+        <button class="cat-btn" onclick="filterCategory('drinks', this)">
+          <i class="fa-solid fa-mug-hot"></i>
+          <span class="t-cat-drinks">Drinks</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main class="menu-main-container">
+
+    <div id="noResultsBox" class="no-results-box">
+      <i class="fa-solid fa-utensils"></i>
+      <h3 class="t-no-results">No dishes found matching your search</h3>
+      <p class="t-no-results-sub">Try searching for 'Alfredo', 'Burger', 'Pizza' or 'Espresso'</p>
+    </div>
+
+    <section id="sandwiches" class="menu-section" data-category="sandwiches">
+      <div class="redzone-badge-header" data-aos="fade-up">
+        <div class="redzone-pill">
+          <span class="redzone-pill-en">Sandwiches</span>
+          <span class="redzone-pill-ar">السندوتشات</span>
+        </div>
+      </div>
+
+      <div class="section-notice-card" data-aos="fade-up">
+        <i class="fa-solid fa-french-fries fa-bounce"></i>
+        <span class="notice-lang-en">All sandwiches are served with crispy fries 🍟</span>
+        <span class="notice-lang-ar">جميع الأصناف تُقدّم مع بطاطس مقرمشة 🍟</span>
+      </div>
+
+      <div class="section-layout-grid with-showcase">
+        <div class="menu-items-table-grid two-cols">
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('san_1', 'Classic Burger', 'كلاسيك برجر', 120)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Classic Burger</div>
+              <div class="item-title-ar">كلاسيك برجر</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">120</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('san_1', 'Classic Burger', 'كلاسيك برجر', 120)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('san_2', 'Chicken Pane', 'تشيكن بانيه', 150)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Chicken Pane</div>
+              <div class="item-title-ar">تشيكن بانيه</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">150</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('san_2', 'Chicken Pane', 'تشيكن بانيه', 150)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('san_3', 'Cheese Burger', 'تشيز برجر', 150)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Cheese Burger</div>
+              <div class="item-title-ar">تشيز برجر</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">150</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('san_3', 'Cheese Burger', 'تشيز برجر', 150)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('san_4', 'Chicken Fajita', 'تشيكن فاهيتا', 150)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Chicken Fajita</div>
+              <div class="item-title-ar">تشيكن فاهيتا</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">150</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('san_4', 'Chicken Fajita', 'تشيكن فاهيتا', 150)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('san_5', 'Mushroom Burger', 'مشروم برجر', 150)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Mushroom Burger</div>
+              <div class="item-title-ar">مشروم برجر</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">150</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('san_5', 'Mushroom Burger', 'مشروم برجر', 150)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('san_6', 'Shawerma Chicken', 'شاورما دجاج', 120)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Shawerma Chicken</div>
+              <div class="item-title-ar">شاورما دجاج</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">120</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('san_6', 'Shawerma Chicken', 'شاورما دجاج', 120)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('san_7', 'Big Tasty Burger', 'بيج تيستي برجر', 150)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Big Tasty Burger</div>
+              <div class="item-title-ar">بيج تيستي برجر</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">150</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('san_7', 'Big Tasty Burger', 'بيج تيستي برجر', 150)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('san_8', 'Chicken zinger', 'تشيكن زنجر', 150)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Chicken zinger</div>
+              <div class="item-title-ar">تشيكن زنجر</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">150</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('san_8', 'Chicken zinger', 'تشيكن زنجر', 150)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('san_9', 'Crispy Chicken Burger', 'كرسبي تشيكن برجر', 160)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Crispy Chicken Burger</div>
+              <div class="item-title-ar">كرسبي تشيكن برجر</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">160</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('san_9', 'Crispy Chicken Burger', 'كرسبي تشيكن برجر', 160)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- لإضافة أصناف جديدة في قسم السندوتشات انسخ النموذج أدناه / Add New Sandwich Here:
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('san_10', 'Item Name En', 'اسم الصنف بالعربي', 150)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Item Name En</div>
+              <div class="item-title-ar">اسم الصنف بالعربي</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">150</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('san_10', 'Item Name En', 'اسم الصنف بالعربي', 150)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          -->
+
+        </div>
+
+        <div class="signature-showcase-box" data-aos="fade-left">
+          <div class="showcase-imgs-wrap">
+            <div class="showcase-card">
+              <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80" alt="Gourmet Burger">
+              <div class="showcase-caption">
+                <span class="showcase-caption-en">Gourmet Beef Burger</span>
+                <span class="showcase-caption-ar">برجر اللحم الفاخر</span>
+              </div>
+            </div>
+            <div class="showcase-card">
+              <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=600&auto=format&fit=crop&q=80" alt="Crispy Chicken Baguette">
+              <div class="showcase-caption">
+                <span class="showcase-caption-en">Crispy Chicken Pane</span>
+                <span class="showcase-caption-ar">تشيكن بانيه مقرمش</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pasta" class="menu-section" data-category="pasta">
+      <div class="redzone-badge-header" data-aos="fade-up">
+        <div class="redzone-pill">
+          <span class="redzone-pill-en">Pasta</span>
+          <span class="redzone-pill-ar">المكرونة</span>
+        </div>
+      </div>
+
+      <div class="section-layout-grid with-showcase reverse-side">
+        <div class="signature-showcase-box" data-aos="fade-right">
+          <div class="showcase-imgs-wrap">
+            <div class="showcase-card">
+              <img src="https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=600&auto=format&fit=crop&q=80" alt="Creamy Alfredo Pasta">
+              <div class="showcase-caption">
+                <span class="showcase-caption-en">Creamy Alfredo Penne</span>
+                <span class="showcase-caption-ar">ألفريدو بالصوص الأبيض</span>
+              </div>
+            </div>
+            <div class="showcase-card">
+              <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=600&auto=format&fit=crop&q=80" alt="Red Sauce Pasta">
+              <div class="showcase-caption">
+                <span class="showcase-caption-en">Red Sauce Penne</span>
+                <span class="showcase-caption-ar">ريد باستا بالصلصة الغنية</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-items-table-grid">
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('pas_1', 'Negresco', 'نجرسكو', 200)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Negresco</div>
+              <div class="item-title-ar">نجرسكو</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">200</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('pas_1', 'Negresco', 'نجرسكو', 200)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('pas_2', 'Alfredo', 'ألفريدو', 180)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Alfredo</div>
+              <div class="item-title-ar">ألفريدو</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">180</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('pas_2', 'Alfredo', 'ألفريدو', 180)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('pas_3', 'Red pasta', 'ريد باستا', 120)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Red pasta</div>
+              <div class="item-title-ar">ريد باستا</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">120</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('pas_3', 'Red pasta', 'ريد باستا', 120)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('pas_4', 'Extra Cheese', 'إكسترا جبنة', 50)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Extra Cheese</div>
+              <div class="item-title-ar">إكسترا جبنة</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">50</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('pas_4', 'Extra Cheese', 'إكسترا جبنة', 50)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('pas_5', 'Extra mushroom', 'إكسترا مشروم', 50)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Extra mushroom</div>
+              <div class="item-title-ar">إكسترا مشروم</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">50</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('pas_5', 'Extra mushroom', 'إكسترا مشروم', 50)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('pas_6', 'Extra Chicken', 'إكسترا فراخ', 50)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Extra Chicken</div>
+              <div class="item-title-ar">إكسترا فراخ</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">50</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('pas_6', 'Extra Chicken', 'إكسترا فراخ', 50)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('pas_7', 'Fries', 'بطاطس مقلية', 35)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Fries</div>
+              <div class="item-title-ar">بطاطس مقلية</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">35</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('pas_7', 'Fries', 'بطاطس مقلية', 35)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('pas_8', 'Fries cheese', 'بطاطس بالجبنة', 50)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Fries cheese</div>
+              <div class="item-title-ar">بطاطس بالجبنة</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">50</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('pas_8', 'Fries cheese', 'بطاطس بالجبنة', 50)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- لإضافة أصناف جديدة في قسم المكرونة / Add New Pasta Items Here:
+          <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('pas_9', 'Item Name En', 'اسم الصنف بالعربي', 180)">
+            <div class="item-name-wrap">
+              <div class="item-title-en">Item Name En</div>
+              <div class="item-title-ar">اسم الصنف بالعربي</div>
+            </div>
+            <div class="item-right-wrap">
+              <div class="price-box">
+                <span class="price-num">180</span>
+                <span class="price-unit">L.E</span>
+              </div>
+              <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('pas_9', 'Item Name En', 'اسم الصنف بالعربي', 180)">
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+          </div>
+          -->
+
+        </div>
+      </div>
+    </section>
+
+    <section id="pizza" class="menu-section" data-category="pizza">
+      <div class="redzone-badge-header" data-aos="fade-up">
+        <div class="redzone-pill">
+          <span class="redzone-pill-en">Pizza</span>
+          <span class="redzone-pill-ar">البيتزا</span>
+        </div>
+      </div>
+
+      <div class="menu-items-table-grid two-cols">
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('piz_1', 'Super Supreme', 'سوبر سوبريم', 250)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Super Supreme</div>
+            <div class="item-title-ar">سوبر سوبريم</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">250</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('piz_1', 'Super Supreme', 'سوبر سوبريم', 250)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('piz_2', 'cheese ranch', 'تشيز رانش', 250)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">cheese ranch</div>
+            <div class="item-title-ar">تشيز رانش</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">250</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('piz_2', 'cheese ranch', 'تشيز رانش', 250)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('piz_3', 'Quattro Formaggi', 'كواترو فورماجي', 230)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Quattro Formaggi</div>
+            <div class="item-title-ar">كواترو فورماجي (4 أجبان)</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">230</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('piz_3', 'Quattro Formaggi', 'كواترو فورماجي', 230)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('piz_4', 'sausage', 'سجق', 230)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">sausage</div>
+            <div class="item-title-ar">بيتزا سجق</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">230</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('piz_4', 'sausage', 'سجق', 230)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('piz_5', 'Tuna Pizza', 'بيتزا تونة', 240)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Tuna Pizza</div>
+            <div class="item-title-ar">بيتزا تونة</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">240</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('piz_5', 'Tuna Pizza', 'بيتزا تونة', 240)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('piz_6', 'vegetable pizza', 'بيتزا خضار', 180)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">vegetable pizza</div>
+            <div class="item-title-ar">بيتزا خضار</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">180</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('piz_6', 'vegetable pizza', 'بيتزا خضار', 180)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('piz_7', 'Chicken BBQ', 'تشيكن باربيكيو', 250)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Chicken BBQ</div>
+            <div class="item-title-ar">تشيكن باربيكيو</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">250</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('piz_7', 'Chicken BBQ', 'تشيكن باربيكيو', 250)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('piz_8', 'Pepperoni', 'بيبروني', 250)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Pepperoni</div>
+            <div class="item-title-ar">بيتزا بيبروني</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">250</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('piz_8', 'Pepperoni', 'بيبروني', 250)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('piz_9', 'margherita pizza', 'مارجريتا', 150)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">margherita pizza</div>
+            <div class="item-title-ar">بيتزا مارجريتا</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">150</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('piz_9', 'margherita pizza', 'مارجريتا', 150)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- لإضافة أصناف جديدة في قسم البيتزا / Add New Pizza Here:
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('piz_10', 'Pizza Name En', 'اسم البيتزا بالعربي', 220)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Pizza Name En</div>
+            <div class="item-title-ar">اسم البيتزا بالعربي</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">220</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('piz_10', 'Pizza Name En', 'اسم البيتزا بالعربي', 220)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        -->
+
+      </div>
+    </section>
+
+    <section id="drinks" class="menu-section" data-category="drinks">
+      <div class="redzone-badge-header" data-aos="fade-up">
+        <div class="redzone-pill">
+          <span class="redzone-pill-en">Drinks</span>
+          <span class="redzone-pill-ar">المشروبات</span>
+        </div>
+      </div>
+
+      <div class="menu-items-table-grid four-cols">
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_1', 'Tea', 'شاي', 30)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Tea</div>
+            <div class="item-title-ar">شاي</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">30</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_1', 'Tea', 'شاي', 30)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_2', 'Green tea', 'شاي أخضر', 30)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Green tea</div>
+            <div class="item-title-ar">شاي أخضر</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">30</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_2', 'Green tea', 'شاي أخضر', 30)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_3', 'Anise', 'يانسون', 30)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Anise</div>
+            <div class="item-title-ar">يانسون</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">30</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_3', 'Anise', 'يانسون', 30)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_4', 'Mint', 'نعناع', 30)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Mint</div>
+            <div class="item-title-ar">نعناع</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">30</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_4', 'Mint', 'نعناع', 30)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_5', 'Coffee', 'قهوة', 40)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Coffee</div>
+            <div class="item-title-ar">قهوة تركي</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">40</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_5', 'Coffee', 'قهوة', 40)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_6', 'French Coffee', 'قهوة فرنساوي', 50)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">French Coffee</div>
+            <div class="item-title-ar">قهوة فرنساوي</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">50</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_6', 'French Coffee', 'قهوة فرنساوي', 50)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_7', 'Espresso', 'إسبريسو', 50)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Espresso</div>
+            <div class="item-title-ar">إسبريسو سينجل</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">50</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_7', 'Espresso', 'إسبريسو', 50)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_8', 'Espresso Double', 'إسبريسو دبل', 70)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Espresso Double</div>
+            <div class="item-title-ar">إسبريسو دبل</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">70</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_8', 'Espresso Double', 'إسبريسو دبل', 70)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_9', 'Nescafe', 'نسكافيه', 60)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Nescafe</div>
+            <div class="item-title-ar">نسكافيه</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">60</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_9', 'Nescafe', 'نسكافيه', 60)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_10', 'Cappuccino', 'كابتشينو', 70)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Cappuccino</div>
+            <div class="item-title-ar">كابتشينو</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">70</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_10', 'Cappuccino', 'كابتشينو', 70)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_11', 'Latte', 'لاتيه', 70)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Latte</div>
+            <div class="item-title-ar">كافيه لاتيه</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">70</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_11', 'Latte', 'لاتيه', 70)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_12', 'Hot chocolate', 'هوت شوكليت', 70)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Hot chocolate</div>
+            <div class="item-title-ar">هوت شوكليت</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">70</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_12', 'Hot chocolate', 'هوت شوكليت', 70)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_13', 'Salep', 'سحلب', 70)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Salep</div>
+            <div class="item-title-ar">سحلب فاخر</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">70</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_13', 'Salep', 'سحلب', 70)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_14', 'Mango', 'عصير مانجو', 75)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Mango</div>
+            <div class="item-title-ar">عصير مانجو فريش</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">75</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_14', 'Mango', 'عصير مانجو', 75)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_15', 'Guava', 'عصير جوافة', 70)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Guava</div>
+            <div class="item-title-ar">عصير جوافة فريش</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">70</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_15', 'Guava', 'عصير جوافة', 70)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_16', 'Orange juice', 'عصير برتقال', 70)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Orange juice</div>
+            <div class="item-title-ar">عصير برتقال فريش</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">70</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_16', 'Orange juice', 'عصير برتقال', 70)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_17', 'Watermelon', 'عصير بطيخ', 75)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Watermelon</div>
+            <div class="item-title-ar">عصير بطيخ فريش</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">75</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_17', 'Watermelon', 'عصير بطيخ', 75)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_18', 'Lemon', 'عصير ليمون', 60)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Lemon</div>
+            <div class="item-title-ar">عصير ليمون فريش</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">60</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_18', 'Lemon', 'عصير ليمون', 60)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_19', 'Lemon squash', 'ليمون سكواش', 70)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Lemon squash</div>
+            <div class="item-title-ar">ليمون سكواش</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">70</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_19', 'Lemon squash', 'ليمون سكواش', 70)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_20', 'Lemon mint', 'ليمون نعناع', 70)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Lemon mint</div>
+            <div class="item-title-ar">ليمون بالنعناع المنعش</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">70</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_20', 'Lemon mint', 'ليمون نعناع', 70)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_21', 'pepsi types', 'أنواع بيبسي', 35)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">pepsi types</div>
+            <div class="item-title-ar">أنواع بيبسي</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">35</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_21', 'pepsi types', 'أنواع بيبسي', 35)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_22', 'fayrouz', 'فيروز', 40)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">fayrouz</div>
+            <div class="item-title-ar">فيروز كنز</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">40</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_22', 'fayrouz', 'فيروز', 40)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_23', 'gold', 'جولد', 40)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">gold</div>
+            <div class="item-title-ar">مشروب جولد شعير</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">40</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_23', 'gold', 'جولد', 40)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_24', 'Water (s)', 'مياه معدنية صغيرة', 20)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Water (s)</div>
+            <div class="item-title-ar">مياه معدنية (صغيرة)</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">20</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_24', 'Water (s)', 'مياه معدنية صغيرة', 20)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- لإضافة مشروبات جديدة في قسم المشروبات / Add New Drinks Here:
+        <div class="menu-item-row" data-aos="fade-up" onclick="addToCart('drk_25', 'Drink Name En', 'اسم المشروب بالعربي', 50)">
+          <div class="item-name-wrap">
+            <div class="item-title-en">Drink Name En</div>
+            <div class="item-title-ar">اسم المشروب بالعربي</div>
+          </div>
+          <div class="item-right-wrap">
+            <div class="price-box">
+              <span class="price-num">50</span>
+              <span class="price-unit">L.E</span>
+            </div>
+            <button class="add-cart-btn" title="Add" onclick="event.stopPropagation(); addToCart('drk_25', 'Drink Name En', 'اسم المشروب بالعربي', 50)">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        -->
+
+      </div>
+    </section>
+
+    <section class="panoramic-gallery-section" data-aos="fade-up">
+      <div class="panoramic-grid">
+        <div class="pano-item">
+          <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&auto=format&fit=crop&q=80" alt="Pepperoni Pizza" loading="lazy">
+        </div>
+        <div class="pano-item">
+          <img src="https://images.unsplash.com/photo-1594007654729-407eedc4be65?w=500&auto=format&fit=crop&q=80" alt="BBQ Ranch Pizza" loading="lazy">
+        </div>
+        <div class="pano-item">
+          <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=500&auto=format&fit=crop&q=80" alt="Fresh Herbal Tea" loading="lazy">
+        </div>
+        <div class="pano-item">
+          <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=500&auto=format&fit=crop&q=80" alt="Artisan Espresso" loading="lazy">
+        </div>
+        <div class="pano-item">
+          <img src="https://images.unsplash.com/photo-1613478223719-2ab802602423?w=500&auto=format&fit=crop&q=80" alt="Fresh Orange Juice" loading="lazy">
+        </div>
+        <div class="pano-item">
+          <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=500&auto=format&fit=crop&q=80" alt="Iced Lemon Mint" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="floatingCart" class="floating-cart-bar" onclick="openCartDrawer()">
+    <div class="cart-summary-left">
+      <div class="cart-icon-bubble">
+        <i class="fa-solid fa-basket-shopping"></i>
+        <span id="cartCountBadge" class="cart-count-badge">0</span>
+      </div>
+      <div class="cart-details-text">
+        <span class="cart-order-title t-cart-summary">Your Order</span>
+        <span class="cart-subtotal-val"><span id="cartSubtotalText">0</span> <span class="price-unit">L.E</span></span>
+      </div>
+    </div>
+    <div class="cart-view-btn">
+      <span class="t-view-order">View Order</span>
+      <i class="fa-solid fa-arrow-right"></i>
+    </div>
+  </div>
+
+  <div id="cartModalBackdrop" class="cart-modal-backdrop" onclick="closeCartDrawer(event)">
+    <div class="cart-drawer">
+      <div class="drawer-header">
+        <div class="drawer-title">
+          <i class="fa-solid fa-utensils" style="color: var(--red-brand);"></i>
+          <span class="t-cart-title">Order Summary</span>
+        </div>
+        <div class="drawer-header-actions">
+          <button class="clear-cart-text-btn" onclick="clearCart()">
+            <i class="fa-solid fa-trash-can"></i>
+            <span class="t-clear-cart">Clear All</span>
+          </button>
+          <button class="drawer-close-btn" onclick="closeCartDrawerDirect()">&times;</button>
+        </div>
+      </div>
+
+      <div id="cartItemsList" class="drawer-items-scroll">
+      </div>
+
+      <div class="drawer-footer">
+        <div class="drawer-total-row">
+          <span class="drawer-total-label t-total-label">Grand Total:</span>
+          <span class="drawer-total-price"><span id="drawerTotalText">0</span> <span class="price-unit">L.E</span></span>
+        </div>
+        <button class="whatsapp-order-btn" onclick="sendOrderViaWhatsApp()">
+          <i class="fa-brands fa-whatsapp" style="font-size: 1.4rem;"></i>
+          <span class="t-whatsapp-btn">Send Order via WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toastMessage" class="toast-msg">
+    <i class="fa-solid fa-circle-check" style="color: #4ade80; font-size: 1.2rem;"></i>
+    <span id="toastText">Item added to your order!</span>
+  </div>
+
+  <button id="backToTopBtn" class="back-to-top" onclick="scrollToTop()" title="Back to Top">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
+  <footer class="menu-footer">
+    <img src="logo_transparent.png" onerror="this.style.display='none'" alt="Redzone Logo" class="footer-logo">
+    <div class="footer-social-links">
+      <a href="https://www.facebook.com/Redzone.me/" target="_blank" rel="noopener noreferrer" class="social-link facebook" aria-label="Facebook">
+        <i class="fa-brands fa-facebook-f"></i>
+      </a>
+      <a href="https://www.instagram.com/redzone.activities/" target="_blank" rel="noopener noreferrer" class="social-link instagram" aria-label="Instagram">
+        <i class="fa-brands fa-instagram"></i>
+      </a>
+      <a href="https://www.youtube.com/@redzone1121" target="_blank" rel="noopener noreferrer" class="social-link youtube" aria-label="YouTube">
+        <i class="fa-brands fa-youtube"></i>
+      </a>
+    </div>
+    <div class="footer-copy">
+      &copy; 2026 Redzone Entertainment. All Rights Reserved.
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+  <script>
+    AOS.init({
+      duration: 500,
+      easing: 'ease-out-cubic',
+      once: true,
+      offset: 20
+    });
+
+    let currentLang = 'en';
+    let cart = {};
+
+    // ضع رقم الواتساب هنا / Place WhatsApp Phone Number Here
+    const WHATSAPP_PHONE = "201030889898";
+
+    const translations = {
+      en: {
+        menuTitle: "Food Menu",
+        open: "Open for Orders",
+        subtag: "Redzone Entertainment Culinary Experience",
+        heroFries: "All Sandwiches served with crispy fries 🍟",
+        searchPlaceholder: "Search menu (e.g., Negresco, Burger, Super Supreme, Coffee...)",
+        catAll: "All",
+        catPasta: "Pasta",
+        catSandwiches: "Sandwiches",
+        catPizza: "Pizza",
+        catDrinks: "Drinks",
+        cartSummary: "Your Order",
+        viewOrder: "View Order",
+        cartTitle: "Order Summary",
+        clearCart: "Clear All",
+        totalLabel: "Grand Total:",
+        whatsappBtn: "Send Order via WhatsApp",
+        toastAdded: "Item added to your order! 🍟",
+        emptyCartMsg: "Your cart is empty! Tap the (+) button next to any item to add it.",
+        noResults: "No dishes found matching your search",
+        noResultsSub: "Try searching for 'Alfredo', 'Burger', 'Pizza' or 'Espresso'",
+        langBtn: "العربية",
+        footerCopy: "&copy; 2026 Redzone Entertainment. All Rights Reserved."
+      },
+      ar: {
+        menuTitle: "قائمة المأكولات",
+        open: "مفتوح للطلبات",
+        subtag: "تجربة طهي وترفيه استثنائية في ريد زون",
+        heroFries: "جميع الأصناف تُقدّم مع بطاطس مقرمشة 🍟",
+        searchPlaceholder: "ابحث في المنيو (مثل: نجرسكو، برجر، سوبر سوبريم، قهوة...)",
+        catAll: "الكل",
+        catPasta: "المكرونة",
+        catSandwiches: "السندوتشات",
+        catPizza: "البيتزا",
+        catDrinks: "المشروبات",
+        cartSummary: "قائمة طلبك",
+        viewOrder: "عرض الطلب",
+        cartTitle: "ملخص الطلب",
+        clearCart: "إفراغ السلة",
+        totalLabel: "الإجمالي النهائي:",
+        whatsappBtn: "إرسال الطلب عبر واتساب",
+        toastAdded: "تمت إضافة الصنف إلى طلبك بنجاح 🍟",
+        emptyCartMsg: "قائمتك فارغة حالياً! اضغط على علامة (+) لإضافة الصنف.",
+        noResults: "لم نجد أي صنف يطابق بحثك",
+        noResultsSub: "جرب البحث بكلمة أخرى مثل 'نجرسكو' أو 'برجر' أو 'بيتزا'",
+        langBtn: "English",
+        footerCopy: "جميع الحقوق محفوظة لـ ريد زون &copy; 2026"
+      }
+    };
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'ar' : 'en';
+      const t = translations[currentLang];
+
+      document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+      document.documentElement.setAttribute('lang', currentLang);
+
+      document.getElementById('langBtnText').innerText = t.langBtn;
+      document.getElementById('menuSearchInput').placeholder = t.searchPlaceholder;
+
+      document.querySelector('.t-menu-title').innerText = t.menuTitle;
+      document.querySelector('.t-open').innerText = t.open;
+      document.querySelector('.t-subtag').innerText = t.subtag;
+      document.querySelector('.t-hero-fries').innerText = t.heroFries;
+
+      document.querySelector('.t-cat-all').innerText = t.catAll;
+      document.querySelector('.t-cat-pasta').innerText = t.catPasta;
+      document.querySelector('.t-cat-sandwiches').innerText = t.catSandwiches;
+      document.querySelector('.t-cat-pizza').innerText = t.catPizza;
+      document.querySelector('.t-cat-drinks').innerText = t.catDrinks;
+
+      document.querySelector('.t-cart-summary').innerText = t.cartSummary;
+      document.querySelector('.t-view-order').innerText = t.viewOrder;
+      document.querySelector('.t-cart-title').innerText = t.cartTitle;
+      document.querySelector('.t-clear-cart').innerText = t.clearCart;
+      document.querySelector('.t-total-label').innerText = t.totalLabel;
+      document.querySelector('.t-whatsapp-btn').innerText = t.whatsappBtn;
+
+      document.querySelector('.t-no-results').innerText = t.noResults;
+      document.querySelector('.t-no-results-sub').innerText = t.noResultsSub;
+
+      const footer = document.querySelector('.footer-copy');
+      if (footer) footer.innerHTML = t.footerCopy;
+
+      renderCartDrawer();
+    }
+
+    function filterMenuSearch() {
+      const query = document.getElementById('menuSearchInput').value.trim().toLowerCase();
+      const clearBtn = document.getElementById('clearSearchBtn');
+      clearBtn.style.display = query.length > 0 ? 'block' : 'none';
+
+      const rows = document.querySelectorAll('.menu-item-row');
+      let visibleCount = 0;
+
+      rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        if (text.includes(query)) {
+          row.classList.remove('item-hidden');
+          visibleCount++;
+        } else {
+          row.classList.add('item-hidden');
+        }
+      });
+
+      document.querySelectorAll('.menu-section').forEach(section => {
+        const hasVisible = section.querySelectorAll('.menu-item-row:not(.item-hidden)').length > 0;
+        section.style.display = hasVisible ? 'block' : 'none';
+      });
+
+      document.getElementById('noResultsBox').style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+
+    function clearMenuSearch() {
+      document.getElementById('menuSearchInput').value = '';
+      document.getElementById('clearSearchBtn').style.display = 'none';
+      filterMenuSearch();
+    }
+
+    function filterCategory(category, btn) {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const sections = document.querySelectorAll('.menu-section');
+      const rows = document.querySelectorAll('.menu-item-row');
+
+      document.getElementById('menuSearchInput').value = '';
+      document.getElementById('clearSearchBtn').style.display = 'none';
+      document.getElementById('noResultsBox').style.display = 'none';
+
+      if (category === 'all') {
+        sections.forEach(s => s.style.display = 'block');
+        rows.forEach(r => r.classList.remove('item-hidden'));
+      } else {
+        sections.forEach(s => {
+          if (s.getAttribute('data-category') === category) {
+            s.style.display = 'block';
+            s.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          } else {
+            s.style.display = 'none';
+          }
+        });
+        rows.forEach(r => {
+          const parent = r.closest('.menu-section');
+          if (parent && parent.getAttribute('data-category') === category) {
+            r.classList.remove('item-hidden');
+          } else {
+            r.classList.add('item-hidden');
+          }
+        });
+      }
+      setTimeout(() => AOS.refresh(), 100);
+    }
+
+    function addToCart(id, nameEn, nameAr, price) {
+      if (cart[id]) {
+        cart[id].qty += 1;
+      } else {
+        cart[id] = {
+          id: id,
+          nameEn: nameEn,
+          nameAr: nameAr,
+          price: price,
+          qty: 1
+        };
+      }
+      updateCartUI();
+      showToast(translations[currentLang].toastAdded);
+    }
+
+    function updateQty(id, delta) {
+      if (!cart[id]) return;
+      cart[id].qty += delta;
+      if (cart[id].qty <= 0) {
+        delete cart[id];
+      }
+      updateCartUI();
+      renderCartDrawer();
+    }
+
+    function removeFromCart(id) {
+      if (cart[id]) {
+        delete cart[id];
+        updateCartUI();
+        renderCartDrawer();
+      }
+    }
+
+    function clearCart() {
+      cart = {};
+      updateCartUI();
+      renderCartDrawer();
+    }
+
+    function updateCartUI() {
+      let totalQty = 0;
+      let totalPrice = 0;
+
+      for (const id in cart) {
+        totalQty += cart[id].qty;
+        totalPrice += cart[id].price * cart[id].qty;
+      }
+
+      document.getElementById('cartCountBadge').innerText = totalQty;
+      document.getElementById('cartSubtotalText').innerText = totalPrice;
+      document.getElementById('drawerTotalText').innerText = totalPrice;
+
+      const bar = document.getElementById('floatingCart');
+      if (totalQty > 0) {
+        bar.classList.add('visible');
+      } else {
+        bar.classList.remove('visible');
+      }
+    }
+
+    function renderCartDrawer() {
+      const container = document.getElementById('cartItemsList');
+      const keys = Object.keys(cart);
+
+      if (keys.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center; padding: 2.5rem 1rem; color: var(--text-dim);">
+            <i class="fa-solid fa-basket-shopping" style="font-size:2.5rem; color:var(--red-brand); margin-bottom:0.75rem;"></i>
+            <p>${translations[currentLang].emptyCartMsg}</p>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      for (const id of keys) {
+        const item = cart[id];
+        const primary = currentLang === 'ar' ? item.nameAr : item.nameEn;
+        const unit = currentLang === 'ar' ? 'ج.م' : 'L.E';
+        html += `
+          <div class="cart-item-row">
+            <div>
+              <div class="cart-item-name">${primary}</div>
+              <div class="cart-item-single-price">${item.price} ${unit}</div>
+            </div>
+            <div class="cart-item-actions">
+              <div class="cart-item-stepper">
+                <button class="stepper-btn" onclick="updateQty('${id}', -1)"><i class="fa-solid fa-minus"></i></button>
+                <span class="stepper-count">${item.qty}</span>
+                <button class="stepper-btn" onclick="updateQty('${id}', 1)"><i class="fa-solid fa-plus"></i></button>
+              </div>
+              <button class="cart-item-del-btn" onclick="removeFromCart('${id}')" title="Delete item">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }
+      container.innerHTML = html;
+    }
+
+    function openCartDrawer() {
+      renderCartDrawer();
+      document.getElementById('cartModalBackdrop').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCartDrawer(event) {
+      if (event.target.id === 'cartModalBackdrop') {
+        closeCartDrawerDirect();
+      }
+    }
+
+    function closeCartDrawerDirect() {
+      document.getElementById('cartModalBackdrop').classList.remove('open');
+      document.body.style.overflow = 'auto';
+    }
+
+    function sendOrderViaWhatsApp() {
+      const keys = Object.keys(cart);
+      if (keys.length === 0) return;
+
+      const unit = currentLang === 'ar' ? 'ج.م' : 'L.E';
+      let message = currentLang === 'ar' 
+        ? "🍟 طلب جديد من منيو ريد زون 🍟\n\n" 
+        : "🍟 Redzone Entertainment Order 🍟\n\n";
+      let total = 0;
+
+      for (const id of keys) {
+        const item = cart[id];
+        const lineTotal = item.price * item.qty;
+        total += lineTotal;
+        const itemName = currentLang === 'ar' ? item.nameAr : item.nameEn;
+        message += `▪️ ${item.qty}x ${itemName} = ${lineTotal} ${unit}\n`;
+      }
+
+      message += currentLang === 'ar' 
+        ? `\n💰 الإجمالي: ${total} ج.م\n📍 رقم الطاولة: `
+        : `\n💰 Total: ${total} L.E\n📍 Table Number: `;
+
+      const encoded = encodeURIComponent(message);
+      window.open(`https://api.whatsapp.com/send?phone=${WHATSAPP_PHONE}&text=${encoded}`, '_blank');
+    }
+
+    let toastTimeout = null;
+    function showToast(text) {
+      const toast = document.getElementById('toastMessage');
+      document.getElementById('toastText').innerText = text;
+      toast.classList.add('show');
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('backToTopBtn');
+      if (window.scrollY > 400) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    });
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
